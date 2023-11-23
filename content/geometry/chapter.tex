@@ -41,6 +41,48 @@
 	\kactlimport{FastDelaunay.h}
 
 \section{3D}
+	\subsection{Dot product:}
+	\[
+		\vec{v} \cdot \vec{w} = \lVert \vec{v} \rVert \lVert \vec{w} \rVert \cos \theta
+	\]
+	\subsection{Cross product:}
+	If $\vec{v}$ and $\vec{w}$
+	are parallel, $\vec{v} \times \vec{w} =
+	\vec{0}$ , and otherwise it is defined as
+	\[
+		\vec{v} \times \vec{w} = (\lVert \vec{v} \rVert \lVert \vec{w} \rVert \sin \theta) \vec{n}
+	\]
+	where $\vec{n}$ is a unit vector perpendicular to both $\vec{v}$
+	and $\vec{w}$ chosen using the right-hand rule. Note that the norm of the 3D cross
+	product is equal to the absolute value of the 2D cross product. \\
+	The right-hand rule says this: if you take your right hand, align your
+	thumb with $\vec{v}$ and your extended index $\vec{w}$, and fold your middle finger at
+	a 90◦ angle, then it will point in the direction of $\vec{v} \times \vec{w}$. 
+
+	\subsection{Mixed product and orientation}
+	A very useful combination of dot product and cross product is the mixed
+	product. We define the mixed product of three vectors $\vec{u}$ , $\vec{v}$ and $\vec{w}$ as
+	\[
+		(\vec{u} \times \vec{v}) \cdot \vec{w}
+	\]
+	Let P be the plane containing $\vec{u}$ and $\vec{v}$. We know that $\vec{n} = \vec{u} \times \vec{v}$ is perpendicular to P, and $\vec{n} \cdot \vec{w}$ will be positive if the angle between $\vec{n}$ and $\vec{w}$ is less than 90◦. This will happen if $\vec{w}$ points to the same side of P as $\vec{n}$ ,
+	while when $\vec{n} \cdot \vec{w}$ is negative $\vec{w}$ will point to the opposite side. \\
+	Note that this is similar to how the 2D cross product $\vec{v} \times \vec{w}$ tells us to
+	which side of to line containing  $\vec{v}$, the vector $\vec{w}$ points. So, we similarly define
+	an $orient()$ function based on it:
+	\[
+		orient(P, Q, R, S) = (\vec{PQ} \times \vec{PR}) \cdot \vec{PS}
+	\]
+	It is positive if $S$ is on the side of plane $PQR$ in the direction of $\vec{PQ} \times \vec{PR}$,
+	negative if $S$ is on the other side, and zero if $S$ is on the plane. \\
+	Earlier, we implicitly assumed that $P$, $Q$, $R$ were not collinear, but in
+	general $orient(P, Q, R, S)$ is zero if and only if $P$, $Q$, $R$, $S$ are coplanar, so
+	when any three points are collinear it is always zero. We can also say that
+	it is nonzero if and only if lines $PQ$ and $RS$ are skew, that is, neither
+	intersecting nor parallel.
+	Finally, $\lVert orient(P, Q, R, S) \rVert$ is equal to six times the volume of tetrahedron $PQRS$.
+
+
 	\kactlimport{PolyhedronVolume.h}
 	\kactlimport{Point3D.h}
 	\kactlimport{3dHull.h}
